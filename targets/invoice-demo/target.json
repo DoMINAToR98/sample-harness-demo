@@ -1,0 +1,96 @@
+{
+  "name": "localhost-app-demo",
+  "source": {
+    "root": "app",
+    "allowed_extensions": [".js", ".html"]
+  },
+  "discovery": {
+    "objective": "Look for vulnerabilities in the sample application.",
+    "allowed_cwes": ["CWE-639", "CWE-79", "CWE-22"],
+    "allowed_endpoints": ["GET /api/invoices/:id", "GET /greet", "GET /api/docs"],
+    "expected_cwes": ["CWE-639", "CWE-79", "CWE-22"],
+    "mock_fixture": "../../fixtures/mock_all.json"
+  },
+  "validation": {
+    "base_url": "http://127.0.0.1:3000",
+    "checks": [
+      {
+        "name": "actor can read own invoice",
+        "for_cwe": "CWE-639",
+        "request": {
+          "method": "GET",
+          "path": "/api/invoices/invoice-alice",
+          "headers": {"X-User-ID": "alice"}
+        },
+        "expect": {"status": 200}
+      },
+      {
+        "name": "actor can read another owner's invoice",
+        "for_cwe": "CWE-639",
+        "request": {
+          "method": "GET",
+          "path": "/api/invoices/invoice-bob",
+          "headers": {"X-User-ID": "alice"}
+        },
+        "expect": {
+          "status": 200,
+          "body_contains": {"id": "invoice-bob", "owner": "bob"}
+        }
+      },
+      {
+        "name": "greet renders a plain name",
+        "for_cwe": "CWE-79",
+        "request": {
+          "method": "GET",
+          "path": "/greet?name=Alice",
+          "headers": {}
+        },
+        "expect": {
+          "status": 200,
+          "body_text_contains": "Hello, Alice!"
+        }
+      },
+      {
+        "name": "greet reflects markup unescaped",
+        "for_cwe": "CWE-79",
+        "request": {
+          "method": "GET",
+          "path": "/greet?name=%3Cscript%3Ealert(1)%3C/script%3E",
+          "headers": {}
+        },
+        "expect": {
+          "status": 200,
+          "body_text_contains": "<script>alert(1)</script>"
+        }
+      },
+      {
+        "name": "docs serve a rooted file",
+        "for_cwe": "CWE-22",
+        "request": {
+          "method": "GET",
+          "path": "/api/docs?file=welcome.txt",
+          "headers": {}
+        },
+        "expect": {
+          "status": 200,
+          "body_text_contains": "Welcome to the invoice service docs."
+        }
+      },
+      {
+        "name": "docs read escapes the docs root",
+        "for_cwe": "CWE-22",
+        "request": {
+          "method": "GET",
+          "path": "/api/docs?file=../package.json",
+          "headers": {}
+        },
+        "expect": {
+          "status": 200,
+          "body_text_contains": "localhost-invoice-demo"
+        }
+      }
+    ],
+    "success_reason": "Every expected weakness was confirmed by its fixed checks.",
+    "failure_reason": "One or more expected weaknesses were not confirmed."
+  }
+}

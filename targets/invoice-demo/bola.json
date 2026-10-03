@@ -1,0 +1,44 @@
+{
+  "name": "localhost-invoice-demo",
+  "source": {
+    "root": "app",
+    "allowed_extensions": [".js", ".html"]
+  },
+  "discovery": {
+    "objective": "Review the supplied demo application for broken object-level authorization.",
+    "allowed_cwes": ["CWE-639"],
+    "allowed_endpoints": ["GET /api/invoices/:id"],
+    "expected_cwes": ["CWE-639"],
+    "mock_fixture": "../../fixtures/mock_candidate.json"
+  },
+  "validation": {
+    "base_url": "http://127.0.0.1:3000",
+    "checks": [
+      {
+        "name": "actor can read own invoice",
+        "for_cwe": "CWE-639",
+        "request": {
+          "method": "GET",
+          "path": "/api/invoices/invoice-alice",
+          "headers": {"X-User-ID": "alice"}
+        },
+        "expect": {"status": 200}
+      },
+      {
+        "name": "actor can read another owner's invoice",
+        "for_cwe": "CWE-639",
+        "request": {
+          "method": "GET",
+          "path": "/api/invoices/invoice-bob",
+          "headers": {"X-User-ID": "alice"}
+        },
+        "expect": {
+          "status": 200,
+          "body_contains": {"id": "invoice-bob", "owner": "bob"}
+        }
+      }
+    ],
+    "success_reason": "The same authenticated user received another user's invoice.",
+    "failure_reason": "The deployed endpoint did not expose the other user's invoice."
+  }
+}

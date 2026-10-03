@@ -1,0 +1,4 @@
+# Optional static-analysis backend for the CPG stage (harness/cpg.py).
+# The harness degrades gracefully to source-only prompts when these are absent.
+tree-sitter==0.23.2
+tree-sitter-javascript==0.23.1

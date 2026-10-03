@@ -1,0 +1,17 @@
+{
+  "name": "localhost-invoice-demo",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Intentionally vulnerable localhost invoice application for the harness demo",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "start:fixed": "SECURE_MODE=1 node server.js",
+    "demo": "echo '--- Alice reads her own invoice (expect 200, owner alice) ---' && curl -s -H 'X-User-ID: alice' http://127.0.0.1:3000/api/invoices/invoice-alice && echo && echo '--- Legacy client: Alice reads the invoice of Bob (vulnerable: 200 owner bob; fixed: 403) ---' && curl -s -H 'X-User-ID: alice' http://127.0.0.1:3000/api/invoices/invoice-bob && echo && echo '--- Modern client 2.0: Alice reads the invoice of Bob (expect 403 even when vulnerable) ---' && curl -s -H 'X-User-ID: alice' -H 'X-Client-Version: 2.0' http://127.0.0.1:3000/api/invoices/invoice-bob && echo",
+    "demo:xss": "echo '--- Greet reflects markup unescaped (expect raw script tag in HTML) ---' && curl -s 'http://127.0.0.1:3000/greet?name=%3Cscript%3Ealert(1)%3C/script%3E' && echo",
+    "demo:traversal": "echo '--- Legit docs read (expect welcome text) ---' && curl -s 'http://127.0.0.1:3000/api/docs?file=welcome.txt' && echo && echo '--- Traversal escapes the docs root (expect package.json) ---' && curl -s 'http://127.0.0.1:3000/api/docs?file=../package.json' && echo"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

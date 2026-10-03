@@ -1,0 +1,47 @@
+{
+  "name": "localhost-greet-demo",
+  "source": {
+    "root": "app",
+    "allowed_extensions": [".js", ".html"]
+  },
+  "discovery": {
+    "objective": "Review the supplied demo application for reflected cross-site scripting.",
+    "allowed_cwes": ["CWE-79"],
+    "allowed_endpoints": ["GET /greet"],
+    "expected_cwes": ["CWE-79"],
+    "mock_fixture": "../../fixtures/mock_xss.json"
+  },
+  "validation": {
+    "base_url": "http://127.0.0.1:3000",
+    "checks": [
+      {
+        "name": "greet renders a plain name",
+        "for_cwe": "CWE-79",
+        "request": {
+          "method": "GET",
+          "path": "/greet?name=Alice",
+          "headers": {}
+        },
+        "expect": {
+          "status": 200,
+          "body_text_contains": "Hello, Alice!"
+        }
+      },
+      {
+        "name": "greet reflects markup unescaped",
+        "for_cwe": "CWE-79",
+        "request": {
+          "method": "GET",
+          "path": "/greet?name=%3Cscript%3Ealert(1)%3C/script%3E",
+          "headers": {}
+        },
+        "expect": {
+          "status": 200,
+          "body_text_contains": "<script>alert(1)</script>"
+        }
+      }
+    ],
+    "success_reason": "The greeting page echoed attacker markup without escaping.",
+    "failure_reason": "The greeting page did not echo the raw markup."
+  }
+}

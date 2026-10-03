@@ -1,0 +1,33 @@
+{
+  "findings": [
+    {
+      "title": "Greeting page reflects names without escaping",
+      "cwe": "CWE-79",
+      "endpoint": "GET /greet",
+      "actor": "unauthenticated visitor",
+      "resource": "greeting page HTML",
+      "claim": "The greet handler reads the name query parameter and interpolates it directly into the HTML response without calling the available escapeHtml helper.",
+      "evidence": [
+        {
+          "path": "server.js",
+          "line_start": 108,
+          "line_end": 111,
+          "note": "escapeHtml exists and encodes markup characters, but no call site uses it."
+        },
+        {
+          "path": "server.js",
+          "line_start": 113,
+          "line_end": 120,
+          "note": "greetName takes the raw query value and renderGreeting interpolates it into the page unescaped."
+        },
+        {
+          "path": "server.js",
+          "line_start": 122,
+          "line_end": 126,
+          "note": "handleGreet serves the interpolated markup as text/html."
+        }
+      ],
+      "validation": "Request /greet with a markup name. A 200 response echoing the raw markup confirms the reflection."
+    }
+  ]
+}

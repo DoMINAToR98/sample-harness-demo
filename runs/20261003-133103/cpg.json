@@ -1,0 +1,506 @@
+{
+  "backend": "tree-sitter",
+  "nodes": [
+    {
+      "id": "server.js#sendJson",
+      "kind": "function",
+      "name": "sendJson",
+      "path": "server.js",
+      "line_start": 24,
+      "line_end": 27
+    },
+    {
+      "id": "server.js#requestId",
+      "kind": "function",
+      "name": "requestId",
+      "path": "server.js",
+      "line_start": 29,
+      "line_end": 31
+    },
+    {
+      "id": "server.js#callerId",
+      "kind": "function",
+      "name": "callerId",
+      "path": "server.js",
+      "line_start": 33,
+      "line_end": 36
+    },
+    {
+      "id": "server.js#normalizeInvoiceId",
+      "kind": "function",
+      "name": "normalizeInvoiceId",
+      "path": "server.js",
+      "line_start": 38,
+      "line_end": 40
+    },
+    {
+      "id": "server.js#findInvoice",
+      "kind": "function",
+      "name": "findInvoice",
+      "path": "server.js",
+      "line_start": 42,
+      "line_end": 44
+    },
+    {
+      "id": "server.js#clientVersion",
+      "kind": "function",
+      "name": "clientVersion",
+      "path": "server.js",
+      "line_start": 46,
+      "line_end": 51
+    },
+    {
+      "id": "server.js#isLegacyClient",
+      "kind": "function",
+      "name": "isLegacyClient",
+      "path": "server.js",
+      "line_start": 55,
+      "line_end": 58
+    },
+    {
+      "id": "server.js#policyForRequest",
+      "kind": "function",
+      "name": "policyForRequest",
+      "path": "server.js",
+      "line_start": 60,
+      "line_end": 64
+    },
+    {
+      "id": "server.js#invoiceIsVisibleTo",
+      "kind": "function",
+      "name": "invoiceIsVisibleTo",
+      "path": "server.js",
+      "line_start": 66,
+      "line_end": 69
+    },
+    {
+      "id": "server.js#recordAudit",
+      "kind": "function",
+      "name": "recordAudit",
+      "path": "server.js",
+      "line_start": 71,
+      "line_end": 73
+    },
+    {
+      "id": "server.js#handleRoot",
+      "kind": "function",
+      "name": "handleRoot",
+      "path": "server.js",
+      "line_start": 75,
+      "line_end": 78
+    },
+    {
+      "id": "server.js#handleHealth",
+      "kind": "function",
+      "name": "handleHealth",
+      "path": "server.js",
+      "line_start": 80,
+      "line_end": 82
+    },
+    {
+      "id": "server.js#handleInvoiceRead",
+      "kind": "function",
+      "name": "handleInvoiceRead",
+      "path": "server.js",
+      "line_start": 84,
+      "line_end": 102
+    },
+    {
+      "id": "server.js#handleNotFound",
+      "kind": "function",
+      "name": "handleNotFound",
+      "path": "server.js",
+      "line_start": 104,
+      "line_end": 106
+    },
+    {
+      "id": "server.js#escapeHtml",
+      "kind": "function",
+      "name": "escapeHtml",
+      "path": "server.js",
+      "line_start": 108,
+      "line_end": 111
+    },
+    {
+      "id": "server.js#greetName",
+      "kind": "function",
+      "name": "greetName",
+      "path": "server.js",
+      "line_start": 113,
+      "line_end": 116
+    },
+    {
+      "id": "server.js#renderGreeting",
+      "kind": "function",
+      "name": "renderGreeting",
+      "path": "server.js",
+      "line_start": 118,
+      "line_end": 120
+    },
+    {
+      "id": "server.js#handleGreet",
+      "kind": "function",
+      "name": "handleGreet",
+      "path": "server.js",
+      "line_start": 122,
+      "line_end": 126
+    },
+    {
+      "id": "server.js#docsFilePath",
+      "kind": "function",
+      "name": "docsFilePath",
+      "path": "server.js",
+      "line_start": 128,
+      "line_end": 130
+    },
+    {
+      "id": "server.js#isWithinRoot",
+      "kind": "function",
+      "name": "isWithinRoot",
+      "path": "server.js",
+      "line_start": 132,
+      "line_end": 135
+    },
+    {
+      "id": "server.js#handleDocs",
+      "kind": "function",
+      "name": "handleDocs",
+      "path": "server.js",
+      "line_start": 137,
+      "line_end": 148
+    },
+    {
+      "id": "server.js#route",
+      "kind": "function",
+      "name": "route",
+      "path": "server.js",
+      "line_start": 150,
+      "line_end": 170
+    }
+  ],
+  "edges": [
+    {
+      "src": "server.js#sendJson",
+      "dst": "external:response.writeHead",
+      "dst_name": "response.writeHead",
+      "kind": "calls",
+      "resolved": false
+    },
+    {
+      "src": "server.js#sendJson",
+      "dst": "external:response.end",
+      "dst_name": "response.end",
+      "kind": "calls",
+      "resolved": false
+    },
+    {
+      "src": "server.js#sendJson",
+      "dst": "external:JSON.stringify",
+      "dst_name": "JSON.stringify",
+      "kind": "calls",
+      "resolved": false
+    },
+    {
+      "src": "server.js#requestId",
+      "dst": "external:Date.now",
+      "dst_name": "Date.now",
+      "kind": "calls",
+      "resolved": false
+    },
+    {
+      "src": "server.js#requestId",
+      "dst": "external:Math.random",
+      "dst_name": "Math.random",
+      "kind": "calls",
+      "resolved": false
+    },
+    {
+      "src": "server.js#normalizeInvoiceId",
+      "dst": "external:String",
+      "dst_name": "String",
+      "kind": "calls",
+      "resolved": false
+    },
+    {
+      "src": "server.js#findInvoice",
+      "dst": "external:Object.hasOwn",
+      "dst_name": "Object.hasOwn",
+      "kind": "calls",
+      "resolved": false
+    },
+    {
+      "src": "server.js#clientVersion",
+      "dst": "external:Number.parseInt",
+      "dst_name": "Number.parseInt",
+      "kind": "calls",
+      "resolved": false
+    },
+    {
+      "src": "server.js#clientVersion",
+      "dst": "external:raw.split",
+      "dst_name": "raw.split",
+      "kind": "calls",
+      "resolved": false
+    },
+    {
+      "src": "server.js#clientVersion",
+      "dst": "external:Number.isNaN",
+      "dst_name": "Number.isNaN",
+      "kind": "calls",
+      "resolved": false
+    },
+    {
+      "src": "server.js#isLegacyClient",
+      "dst": "server.js#clientVersion",
+      "dst_name": "clientVersion",
+      "kind": "calls",
+      "resolved": true
+    },
+    {
+      "src": "server.js#policyForRequest",
+      "dst": "server.js#isLegacyClient",
+      "dst_name": "isLegacyClient",
+      "kind": "calls",
+      "resolved": true
+    },
+    {
+      "src": "server.js#handleRoot",
+      "dst": "external:response.writeHead",
+      "dst_name": "response.writeHead",
+      "kind": "calls",
+      "resolved": false
+    },
+    {
+      "src": "server.js#handleRoot",
+      "dst": "external:response.end",
+      "dst_name": "response.end",
+      "kind": "calls",
+      "resolved": false
+    },
+    {
+      "src": "server.js#handleHealth",
+      "dst": "server.js#sendJson",
+      "dst_name": "sendJson",
+      "kind": "calls",
+      "resolved": true
+    },
+    {
+      "src": "server.js#handleInvoiceRead",
+      "dst": "server.js#callerId",
+      "dst_name": "callerId",
+      "kind": "calls",
+      "resolved": true
+    },
+    {
+      "src": "server.js#handleInvoiceRead",
+      "dst": "server.js#recordAudit",
+      "dst_name": "recordAudit",
+      "kind": "calls",
+      "resolved": true
+    },
+    {
+      "src": "server.js#handleInvoiceRead",
+      "dst": "server.js#sendJson",
+      "dst_name": "sendJson",
+      "kind": "calls",
+      "resolved": true
+    },
+    {
+      "src": "server.js#handleInvoiceRead",
+      "dst": "server.js#findInvoice",
+      "dst_name": "findInvoice",
+      "kind": "calls",
+      "resolved": true
+    },
+    {
+      "src": "server.js#handleInvoiceRead",
+      "dst": "server.js#normalizeInvoiceId",
+      "dst_name": "normalizeInvoiceId",
+      "kind": "calls",
+      "resolved": true
+    },
+    {
+      "src": "server.js#handleInvoiceRead",
+      "dst": "server.js#policyForRequest",
+      "dst_name": "policyForRequest",
+      "kind": "calls",
+      "resolved": true
+    },
+    {
+      "src": "server.js#handleInvoiceRead",
+      "dst": "server.js#invoiceIsVisibleTo",
+      "dst_name": "invoiceIsVisibleTo",
+      "kind": "calls",
+      "resolved": true
+    },
+    {
+      "src": "server.js#handleNotFound",
+      "dst": "server.js#sendJson",
+      "dst_name": "sendJson",
+      "kind": "calls",
+      "resolved": true
+    },
+    {
+      "src": "server.js#escapeHtml",
+      "dst": "external:String",
+      "dst_name": "String",
+      "kind": "calls",
+      "resolved": false
+    },
+    {
+      "src": "server.js#handleGreet",
+      "dst": "server.js#renderGreeting",
+      "dst_name": "renderGreeting",
+      "kind": "calls",
+      "resolved": true
+    },
+    {
+      "src": "server.js#handleGreet",
+      "dst": "server.js#greetName",
+      "dst_name": "greetName",
+      "kind": "calls",
+      "resolved": true
+    },
+    {
+      "src": "server.js#handleGreet",
+      "dst": "external:response.writeHead",
+      "dst_name": "response.writeHead",
+      "kind": "calls",
+      "resolved": false
+    },
+    {
+      "src": "server.js#handleGreet",
+      "dst": "external:response.end",
+      "dst_name": "response.end",
+      "kind": "calls",
+      "resolved": false
+    },
+    {
+      "src": "server.js#docsFilePath",
+      "dst": "external:path.join",
+      "dst_name": "path.join",
+      "kind": "calls",
+      "resolved": false
+    },
+    {
+      "src": "server.js#docsFilePath",
+      "dst": "external:String",
+      "dst_name": "String",
+      "kind": "calls",
+      "resolved": false
+    },
+    {
+      "src": "server.js#isWithinRoot",
+      "dst": "external:path.relative",
+      "dst_name": "path.relative",
+      "kind": "calls",
+      "resolved": false
+    },
+    {
+      "src": "server.js#isWithinRoot",
+      "dst": "external:rel.startsWith",
+      "dst_name": "rel.startsWith",
+      "kind": "calls",
+      "resolved": false
+    },
+    {
+      "src": "server.js#isWithinRoot",
+      "dst": "external:path.isAbsolute",
+      "dst_name": "path.isAbsolute",
+      "kind": "calls",
+      "resolved": false
+    },
+    {
+      "src": "server.js#handleDocs",
+      "dst": "server.js#docsFilePath",
+      "dst_name": "docsFilePath",
+      "kind": "calls",
+      "resolved": true
+    },
+    {
+      "src": "server.js#handleDocs",
+      "dst": "external:fs.readFileSync",
+      "dst_name": "fs.readFileSync",
+      "kind": "calls",
+      "resolved": false
+    },
+    {
+      "src": "server.js#handleDocs",
+      "dst": "server.js#sendJson",
+      "dst_name": "sendJson",
+      "kind": "calls",
+      "resolved": true
+    },
+    {
+      "src": "server.js#handleDocs",
+      "dst": "external:response.writeHead",
+      "dst_name": "response.writeHead",
+      "kind": "calls",
+      "resolved": false
+    },
+    {
+      "src": "server.js#handleDocs",
+      "dst": "external:response.end",
+      "dst_name": "response.end",
+      "kind": "calls",
+      "resolved": false
+    },
+    {
+      "src": "server.js#route",
+      "dst": "external:response.setHeader",
+      "dst_name": "response.setHeader",
+      "kind": "calls",
+      "resolved": false
+    },
+    {
+      "src": "server.js#route",
+      "dst": "server.js#requestId",
+      "dst_name": "requestId",
+      "kind": "calls",
+      "resolved": true
+    },
+    {
+      "src": "server.js#route",
+      "dst": "server.js#handleRoot",
+      "dst_name": "handleRoot",
+      "kind": "calls",
+      "resolved": true
+    },
+    {
+      "src": "server.js#route",
+      "dst": "server.js#handleHealth",
+      "dst_name": "handleHealth",
+      "kind": "calls",
+      "resolved": true
+    },
+    {
+      "src": "server.js#route",
+      "dst": "server.js#handleGreet",
+      "dst_name": "handleGreet",
+      "kind": "calls",
+      "resolved": true
+    },
+    {
+      "src": "server.js#route",
+      "dst": "server.js#handleDocs",
+      "dst_name": "handleDocs",
+      "kind": "calls",
+      "resolved": true
+    },
+    {
+      "src": "server.js#route",
+      "dst": "server.js#handleInvoiceRead",
+      "dst_name": "handleInvoiceRead",
+      "kind": "calls",
+      "resolved": true
+    },
+    {
+      "src": "server.js#route",
+      "dst": "server.js#handleNotFound",
+      "dst_name": "handleNotFound",
+      "kind": "calls",
+      "resolved": true
+    }
+  ],
+  "truncated": false
+}

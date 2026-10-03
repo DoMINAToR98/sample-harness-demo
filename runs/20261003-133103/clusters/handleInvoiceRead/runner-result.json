@@ -1,0 +1,51 @@
+{
+  "findings": [
+    {
+      "actor": "attacker sending X-User-ID: alice with no X-Client-Version (or version < 2.0)",
+      "claim": "Legacy policy bypasses per-object ownership check, allowing any authenticated user to read any other user's invoice",
+      "cwe": "CWE-639",
+      "endpoint": "GET /api/invoices/:id",
+      "evidence": [
+        {
+          "line_end": 20,
+          "line_start": 17,
+          "note": "invoices have distinct owners: invoice-alice owned by alice and invoice-bob owned by bob",
+          "path": "server.js"
+        },
+        {
+          "line_end": 58,
+          "line_start": 55,
+          "note": "isLegacyClient returns true when version header is missing (null) or major < 2",
+          "path": "server.js"
+        },
+        {
+          "line_end": 64,
+          "line_start": 60,
+          "note": "policyForRequest selects legacy profile for legacy clients unless SECURE_MODE strict",
+          "path": "server.js"
+        },
+        {
+          "line_end": 69,
+          "line_start": 66,
+          "note": "invoiceIsVisibleTo returns true for all invoices under legacy policy, skipping owner check",
+          "path": "server.js"
+        },
+        {
+          "line_end": 102,
+          "line_start": 84,
+          "note": "handleInvoiceRead enforces visibility but permits read when legacy policy returns true",
+          "path": "server.js"
+        },
+        {
+          "line_end": 39,
+          "line_start": 37,
+          "note": "UI confirms empty or below 2 selects legacy profile",
+          "path": "index.html"
+        }
+      ],
+      "resource": "invoice-bob (owner: bob) via /api/invoices/invoice-bob",
+      "title": "Broken Object Level Authorization via legacy client fallback allows cross-user invoice read",
+      "validation": "As alice with no X-Client-Version, GET /api/invoices/invoice-bob returns 200 with bob's invoice; repeating with X-Client-Version: 2.0 returns 403 forbidden, confirming legacy policy bypasses ownership check."
+    }
+  ]
+}

@@ -1,0 +1,32 @@
+{"event": "run_started", "policy": "/Users/dominator/Desktop/bsides_bloomington/basic_harness_demo/policies/default.json", "target": "/Users/dominator/Desktop/bsides_bloomington/basic_harness_demo/targets/invoice-demo/target.json", "timestamp": "2026-10-03T17:31:03.670884+00:00"}
+{"detail": "", "event": "step_started", "name": "collect sources", "step": 1, "timestamp": "2026-10-03T17:31:03.671237+00:00", "total": 6}
+{"event": "source_collected", "files": [{"path": "index.html", "sha256": "ffd8a058848870f5079a325cad354609a0e9171ee84f11760bddbdbb2b8b10e4"}, {"path": "server.js", "sha256": "f82f6f2cfe8923f7ee1303ca27496fc37a1b89a78267891309e598f70d8736c9"}], "timestamp": "2026-10-03T17:31:03.671734+00:00"}
+{"detail": "", "event": "step_started", "name": "build call graph", "step": 2, "timestamp": "2026-10-03T17:31:03.671918+00:00", "total": 6}
+{"edges": 46, "event": "cpg_built", "functions": 22, "timestamp": "2026-10-03T17:31:03.679202+00:00"}
+{"detail": "", "event": "step_started", "name": "partition clusters", "step": 3, "timestamp": "2026-10-03T17:31:03.679314+00:00", "total": 6}
+{"clusters": ["handleDocs", "handleGreet", "handleInvoiceRead", "shared"], "event": "clusters_built", "timestamp": "2026-10-03T17:31:03.679963+00:00"}
+{"detail": "4 reasoning calls", "event": "step_started", "name": "find vulnerabilities", "step": 4, "timestamp": "2026-10-03T17:31:03.680108+00:00", "total": 6}
+{"cluster": "handleDocs", "event": "cluster_started", "position": 1, "timestamp": "2026-10-03T17:31:03.680262+00:00", "total": 4}
+{"attempt": 1, "event": "runner_invoked", "max_calls": 2, "timestamp": "2026-10-03T17:31:03.680322+00:00"}
+{"attempt": 1, "event": "runner_completed", "timestamp": "2026-10-03T17:31:17.870339+00:00"}
+{"cluster": "handleDocs", "event": "cluster_completed", "findings": 1, "timestamp": "2026-10-03T17:31:17.870952+00:00"}
+{"cluster": "handleGreet", "event": "cluster_started", "position": 2, "timestamp": "2026-10-03T17:31:17.871630+00:00", "total": 4}
+{"attempt": 1, "event": "runner_invoked", "max_calls": 2, "timestamp": "2026-10-03T17:31:17.872179+00:00"}
+{"attempt": 1, "event": "runner_completed", "timestamp": "2026-10-03T17:31:50.264152+00:00"}
+{"cluster": "handleGreet", "event": "cluster_completed", "findings": 1, "timestamp": "2026-10-03T17:31:50.264785+00:00"}
+{"cluster": "handleInvoiceRead", "event": "cluster_started", "position": 3, "timestamp": "2026-10-03T17:31:50.265486+00:00", "total": 4}
+{"attempt": 1, "event": "runner_invoked", "max_calls": 2, "timestamp": "2026-10-03T17:31:50.266022+00:00"}
+{"attempt": 1, "event": "runner_completed", "timestamp": "2026-10-03T17:32:14.884461+00:00"}
+{"cluster": "handleInvoiceRead", "event": "cluster_completed", "findings": 1, "timestamp": "2026-10-03T17:32:14.884993+00:00"}
+{"cluster": "shared", "event": "cluster_started", "position": 4, "timestamp": "2026-10-03T17:32:14.885496+00:00", "total": 4}
+{"attempt": 1, "event": "runner_invoked", "max_calls": 2, "timestamp": "2026-10-03T17:32:14.886054+00:00"}
+{"attempt": 1, "event": "runner_completed", "timestamp": "2026-10-03T17:32:48.946223+00:00"}
+{"cluster": "shared", "event": "cluster_completed", "findings": 0, "timestamp": "2026-10-03T17:32:48.946796+00:00"}
+{"detail": "", "event": "step_started", "name": "merge and gate findings", "step": 5, "timestamp": "2026-10-03T17:32:48.946985+00:00", "total": 6}
+{"clusters": 4, "duplicates": 0, "event": "reports_merged", "findings": 3, "timestamp": "2026-10-03T17:32:48.947154+00:00"}
+{"cwe": "CWE-22", "event": "candidate_accepted", "timestamp": "2026-10-03T17:32:48.947354+00:00", "title": "Path traversal in /api/docs permits reading files outside docs root"}
+{"cwe": "CWE-79", "event": "candidate_accepted", "timestamp": "2026-10-03T17:32:48.947478+00:00", "title": "Reflected cross-site scripting in greeting via unescaped name parameter"}
+{"cwe": "CWE-639", "event": "candidate_accepted", "timestamp": "2026-10-03T17:32:48.947590+00:00", "title": "Broken Object Level Authorization via legacy client fallback allows cross-user invoice read"}
+{"detail": "", "event": "step_started", "name": "validate and report", "step": 6, "timestamp": "2026-10-03T17:32:48.947700+00:00", "total": 6}
+{"event": "runtime_validation_completed", "missing_cwes": [], "status": "validated", "timestamp": "2026-10-03T17:32:48.973227+00:00", "verdicts": [{"cwe": "CWE-22", "verdict": "validated"}, {"cwe": "CWE-79", "verdict": "validated"}, {"cwe": "CWE-639", "verdict": "validated"}]}
+{"event": "run_completed", "status": "validated", "timestamp": "2026-10-03T17:32:48.974849+00:00"}

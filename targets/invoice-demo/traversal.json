@@ -1,0 +1,47 @@
+{
+  "name": "localhost-docs-demo",
+  "source": {
+    "root": "app",
+    "allowed_extensions": [".js", ".html"]
+  },
+  "discovery": {
+    "objective": "Review the supplied demo application for path traversal in file reads.",
+    "allowed_cwes": ["CWE-22"],
+    "allowed_endpoints": ["GET /api/docs"],
+    "expected_cwes": ["CWE-22"],
+    "mock_fixture": "../../fixtures/mock_traversal.json"
+  },
+  "validation": {
+    "base_url": "http://127.0.0.1:3000",
+    "checks": [
+      {
+        "name": "docs serve a rooted file",
+        "for_cwe": "CWE-22",
+        "request": {
+          "method": "GET",
+          "path": "/api/docs?file=welcome.txt",
+          "headers": {}
+        },
+        "expect": {
+          "status": 200,
+          "body_text_contains": "Welcome to the invoice service docs."
+        }
+      },
+      {
+        "name": "docs read escapes the docs root",
+        "for_cwe": "CWE-22",
+        "request": {
+          "method": "GET",
+          "path": "/api/docs?file=../package.json",
+          "headers": {}
+        },
+        "expect": {
+          "status": 200,
+          "body_text_contains": "localhost-invoice-demo"
+        }
+      }
+    ],
+    "success_reason": "The docs reader served a file outside the docs root.",
+    "failure_reason": "The docs reader did not serve the file outside the docs root."
+  }
+}

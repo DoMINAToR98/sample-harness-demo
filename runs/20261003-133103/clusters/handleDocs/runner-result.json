@@ -1,0 +1,33 @@
+{
+  "findings": [
+    {
+      "actor": "unauthenticated remote attacker",
+      "claim": "handleDocs joins the attacker-controlled `file` query parameter into a filesystem path with no sanitization and reads it without any containment check, allowing `../` traversal outside docsRoot to read arbitrary process-accessible files.",
+      "cwe": "CWE-22",
+      "endpoint": "GET /api/docs",
+      "evidence": [
+        {
+          "line_end": 130,
+          "line_start": 128,
+          "note": "docsFilePath directly joins attacker-controlled name onto docsRoot with path.join and no normalization, filtering, or containment.",
+          "path": "server.js"
+        },
+        {
+          "line_end": 148,
+          "line_start": 137,
+          "note": "handleDocs takes url.searchParams.get(file) into docsFilePath and fs.readFileSyncs the result, with no call to isWithinRoot and no traversal rejection; 404 only on read failure.",
+          "path": "server.js"
+        },
+        {
+          "line_end": 135,
+          "line_start": 132,
+          "note": "isWithinRoot containment helper is defined but never invoked on the docs path, leaving the traversal check unenforced.",
+          "path": "server.js"
+        }
+      ],
+      "resource": "arbitrary server filesystem files readable by the node process",
+      "title": "Path traversal in /api/docs permits reading files outside docs root",
+      "validation": "Request GET /api/docs?file=../server.js and encoded variants (e.g. ..%2F) without authentication and observe 200 text/plain with server source, confirming missing containment enforcement."
+    }
+  ]
+}

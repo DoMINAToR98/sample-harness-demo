@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Invoice Viewer</title>
+    <style>
+      :root { color-scheme: light; }
+      body { font: 17px system-ui, sans-serif; margin: 0; background: #edf0f4; color: #222; }
+      header { background: #1d2a4a; color: #fff; padding: 18px 32px; }
+      header .event { font-size: 13px; letter-spacing: 2px; text-transform: uppercase; opacity: 0.8; }
+      header h1 { margin: 4px 0 0; font-size: 26px; }
+      main { max-width: 720px; margin: 28px auto; background: #fff; border-radius: 10px; padding: 24px 28px; box-shadow: 0 2px 10px rgba(0,0,0,0.08); }
+      label { display: block; margin: 14px 0 4px; font-weight: 600; }
+      input { padding: 9px 10px; width: 320px; max-width: 100%; border: 1px solid #bbb; border-radius: 6px; font-size: 15px; }
+      .hint { font-size: 13px; color: #666; margin: 2px 0 8px; }
+      button { margin-top: 16px; padding: 10px 22px; font-size: 15px; border: 0; border-radius: 6px; background: #1d2a4a; color: #fff; cursor: pointer; }
+      button:hover { background: #2c3d68; }
+      pre { background: #f1f1ed; padding: 16px; min-height: 100px; border-radius: 6px; overflow-x: auto; }
+      pre.ok { background: #e7f4ec; }
+      pre.bad { background: #f9e7e7; }
+      footer { max-width: 720px; margin: 0 auto 40px; color: #666; font-size: 14px; text-align: center; }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="event">BSides Bloomington 2026</div>
+      <h1>Sample Test Application</h1>
+    </header>
+    <main>
+      <p>Invoice Viewer. Try Alice with each invoice ID, with and without a client version.</p>
+      <p><a href="/greet?name=Alice">Greet Alice</a> &middot; <a href="/api/docs?file=welcome.txt">Docs</a></p>
+      <label for="user">User</label>
+      <input id="user" value="alice">
+      <label for="invoice">Invoice</label>
+      <input id="invoice" value="invoice-alice">
+      <label for="version">Client version</label>
+      <input id="version" value="" placeholder="leave empty for a legacy client">
+      <div class="hint">Empty or below 2 selects the legacy profile; 2.0 or higher selects the standard profile.</div>
+      <button id="load">Load invoice</button>
+      <pre id="result">No request yet.</pre>
+    </main>
+    <footer>Security demo: compare both invoices as Alice, then re-run with client version 2.0.</footer>
+    <script>
+      document.querySelector("#load").addEventListener("click", async () => {
+        const user = document.querySelector("#user").value;
+        const invoice = document.querySelector("#invoice").value;
+        const version = document.querySelector("#version").value.trim();
+        const headers = { "X-User-ID": user };
+        if (version) headers["X-Client-Version"] = version;
+        const response = await fetch(`/api/invoices/${encodeURIComponent(invoice)}`, { headers });
+        const body = await response.json();
+        const result = document.querySelector("#result");
+        result.textContent = `${response.status}\n${JSON.stringify(body, null, 2)}`;
+        result.className = response.status === 200 ? "ok" : "bad";
+      });
+    </script>
+  </body>
+</html>

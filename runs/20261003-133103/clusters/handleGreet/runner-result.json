@@ -1,0 +1,39 @@
+{
+  "findings": [
+    {
+      "actor": "Unauthenticated remote attacker via crafted link or direct request",
+      "claim": "The `name` query parameter is taken directly from the URL and interpolated unescaped into an HTML response, allowing reflected JavaScript execution in the victim's browser.",
+      "cwe": "CWE-79",
+      "endpoint": "GET /greet",
+      "evidence": [
+        {
+          "line_end": 116,
+          "line_start": 113,
+          "note": "greetName returns attacker-controlled URL query value `name` with no validation or escaping, defaulting only when missing",
+          "path": "server.js"
+        },
+        {
+          "line_end": 120,
+          "line_start": 118,
+          "note": "renderGreeting interpolates `name` directly into HTML h1 element via template string with no escaping call",
+          "path": "server.js"
+        },
+        {
+          "line_end": 126,
+          "line_start": 122,
+          "note": "handleGreet renders that value and returns it as text/html, completing reflected-XSS source-to-sink",
+          "path": "server.js"
+        },
+        {
+          "line_end": 111,
+          "line_start": 108,
+          "note": "escapeHtml helper exists but is never called in this cluster, confirming missing output encoding",
+          "path": "server.js"
+        }
+      ],
+      "resource": "GET /greet HTML greeting response and `name` query parameter",
+      "title": "Reflected cross-site scripting in greeting via unescaped name parameter",
+      "validation": "Statically traced flow: URL searchParams.get(name) in greetName to string interpolation in renderGreeting to text/html response in handleGreet with no sanitization or escapeHtml use in between."
+    }
+  ]
+}

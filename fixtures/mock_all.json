@@ -1,0 +1,91 @@
+{
+  "findings": [
+    {
+      "title": "Legacy client profile allows cross-user invoice reads",
+      "cwe": "CWE-639",
+      "endpoint": "GET /api/invoices/:id",
+      "actor": "authenticated user",
+      "resource": "invoice owned by another user",
+      "claim": "The invoice handler resolves a per-request policy, and requests without a modern X-Client-Version fall into the legacy profile, under which the visibility check returns true without comparing invoice owners.",
+      "evidence": [
+        {
+          "path": "server.js",
+          "line_start": 46,
+          "line_end": 58,
+          "note": "clientVersion returns null when X-Client-Version is missing, and isLegacyClient treats missing or old versions as legacy."
+        },
+        {
+          "path": "server.js",
+          "line_start": 60,
+          "line_end": 69,
+          "note": "policyForRequest selects the legacy profile for such requests, and invoiceIsVisibleTo returns true for legacy without an ownership comparison."
+        },
+        {
+          "path": "server.js",
+          "line_start": 84,
+          "line_end": 102,
+          "note": "handleInvoiceRead authenticates the caller and checks invoice existence, then enforces only that permissive visibility result before returning 200."
+        }
+      ],
+      "validation": "As Alice without X-Client-Version, request invoice-alice and invoice-bob. A 200 response containing owner bob for the second request confirms the authorization failure."
+    },
+    {
+      "title": "Greeting page reflects names without escaping",
+      "cwe": "CWE-79",
+      "endpoint": "GET /greet",
+      "actor": "unauthenticated visitor",
+      "resource": "greeting page HTML",
+      "claim": "The greet handler reads the name query parameter and interpolates it directly into the HTML response without calling the available escapeHtml helper.",
+      "evidence": [
+        {
+          "path": "server.js",
+          "line_start": 108,
+          "line_end": 111,
+          "note": "escapeHtml exists and encodes markup characters, but no call site uses it."
+        },
+        {
+          "path": "server.js",
+          "line_start": 113,
+          "line_end": 120,
+          "note": "greetName takes the raw query value and renderGreeting interpolates it into the page unescaped."
+        },
+        {
+          "path": "server.js",
+          "line_start": 122,
+          "line_end": 126,
+          "note": "handleGreet serves the interpolated markup as text/html."
+        }
+      ],
+      "validation": "Request /greet with a markup name. A 200 response echoing the raw markup confirms the reflection."
+    },
+    {
+      "title": "Docs reader follows parent-directory segments",
+      "cwe": "CWE-22",
+      "endpoint": "GET /api/docs",
+      "actor": "unauthenticated visitor",
+      "resource": "files outside the docs root",
+      "claim": "The docs handler joins the file query parameter onto the docs root without a containment check, so parent-directory segments resolve outside the docs directory.",
+      "evidence": [
+        {
+          "path": "server.js",
+          "line_start": 128,
+          "line_end": 130,
+          "note": "docsFilePath joins the raw parameter onto the docs root with no normalization or containment check."
+        },
+        {
+          "path": "server.js",
+          "line_start": 132,
+          "line_end": 135,
+          "note": "isWithinRoot could reject escapes, but the handler never calls it."
+        },
+        {
+          "path": "server.js",
+          "line_start": 137,
+          "line_end": 148,
+          "note": "handleDocs reads the joined path and serves its bytes with a 200 status."
+        }
+      ],
+      "validation": "Request /api/docs?file=../package.json. A 200 response with package metadata confirms the escape."
+    }
+  ]
+}

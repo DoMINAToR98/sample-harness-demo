@@ -1,0 +1,2 @@
+Welcome to the invoice service docs.
+Use /api/docs?file=welcome.txt to read this file.
